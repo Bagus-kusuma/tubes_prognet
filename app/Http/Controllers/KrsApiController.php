@@ -39,7 +39,7 @@ class KrsApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return krs::find($id);
     }
 
     /**

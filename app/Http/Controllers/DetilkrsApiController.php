@@ -39,7 +39,7 @@ class DetilkrsApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return detilkrs::find($id);
     }
 
     /**

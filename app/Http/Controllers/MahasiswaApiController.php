@@ -39,7 +39,7 @@ class MahasiswaApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return mahasiswa::find($id);
     }
 
     /**
