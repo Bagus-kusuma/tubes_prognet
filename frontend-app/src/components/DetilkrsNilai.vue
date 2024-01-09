@@ -231,13 +231,6 @@ export default {
         edit(detil_id) {
             localStorage.setItem('detil_id', detil_id);
             this.$router.push('/detilkrs');
-            var url = `https://api-group13-prognet.manpits.xyz/api/detilkrs/${krs.id}`;
-            var token = localStorage.getItem('token');
-            var header = {'Authorization': 'Bearer ' + token};
-            axios.get(url, { headers: header }).then(({ data }) => {
-            this.krs = data;
-            console.log(this.detilkrs);
-            });
         },
 
         remove(detilkrs) {

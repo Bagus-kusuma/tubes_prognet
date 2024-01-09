@@ -158,6 +158,7 @@
     
         created() {
         console.log('Created!');
+        this.loaddetilkrs();
         this.loadalldetilkrs();
         this.loadallkrs();
         this.loadallmahasiswa();
@@ -166,9 +167,9 @@
     
         methods: {
         loaddetilkrs() {
-            var detil_id = localStorage.getItem('mhs_id');
-            mhs_id = mhs_id.toString();
-            var url = 'https://api-group13-prognet.manpits.xyz/api/detilkrs/';
+            var detil_id = localStorage.getItem('detil_id');
+            detil_id = detil_id.toString();
+            var url = `https://api-group13-prognet.manpits.xyz/api/detilkrs/${detil_id}';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(({ data }) => {
