@@ -71,7 +71,7 @@
             return;
             }
     
-            var url = 'http://127.0.0.1:8000/api/user';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/user';
             axios
             .post(url, {
                 name: this.user.name,

@@ -14,13 +14,13 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/detilkrs" class="nav-link">
-                            Data Detail KRS
+                            <router-link to="/agama" class="nav-link">
+                            Data Agama Mahasiswa
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/mahasiswa" class="nav-link">
-                            Data Mahasiswa
+                            <router-link to="/krs" class="nav-link">
+                            Data Krs
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -29,18 +29,18 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/agama" class="nav-link">
-                            Data Agama Mahasiswa
+                            <router-link to="/mahasiswa" class="nav-link">
+                            Data Mahasiswa
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/krs" class="nav-link">
-                            Data KRS 
+                            <router-link to="/detilkrs" class="nav-link">
+                            Data Detil Krs 
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" @click="logout">
-                                Logout
+                            <a href="#" class="nav-link logout" @click="logout">
+                                LOGOUT ]->
                             </a>
                         </li>
                     </ul>
@@ -55,7 +55,7 @@
     <!-- Akhir Sidebar -->
 
     <div class="custom-container">
-    <h2 class="text-center">FORM Mata Kuliah</h2>
+    <h2 class="text-center">FORM MATAKULIAH</h2>
     <form @submit.prevent="simpan()">
         <div class="row justify-content-center">
         <div class="mb-3 form-group col-10">
@@ -80,7 +80,7 @@
             <select type="text" class="form-control" v-model="matakuliah.semester">
             <option value=""></option>
             <option v-for="(krs, index) in allkrs" :key="krs.id" :value="krs.semester">
-                {{ krs.semester }}
+                {{ krs.semester + '-' + krs.tahun }}
             </option>
             </select>
         </div>
@@ -93,13 +93,14 @@
         </div>
     </form>
 
+    <div class="custom-container">
     <h3 style="text-align: center;">TABEL Mata Kuliah</h3>
     <div class="row justify-content-center">
-        <div class="col-10">
-        <table class="table table-bordered">
+        <div class="col-10 table-container d-flex justify-content-center align-items-center">
+            <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="text-center">Id</th>
+                <th class="text-center">NO</th>
                 <th class="text-center">Kode</th>
                 <th class="text-center">Mata Kuliah</th>
                 <th class="text-center">SKS</th>
@@ -109,7 +110,7 @@
             </thead>
             <tbody>
             <tr v-for="(matakuliah, index) in allmatakuliah" :key="matakuliah.id">
-                <td class="text-center">{{ matakuliah.id }}</td>
+                <td class="text-center">{{ index + 1 }}</td>
                 <td class="text-center">{{ matakuliah.kode }}</td>
                 <td class="text-center">{{ matakuliah.namamatakuliah }}</td>
                 <td class="text-center">{{ matakuliah.sks }}</td>
@@ -122,9 +123,12 @@
                 </td>
             </tr>
             </tbody>
-        </table>
+            </table>
         </div>
     </div>
+</div>
+
+>
     </div>
 </template>
 
@@ -155,7 +159,7 @@
 
         methods: {
         loadallmatakuliah() {
-            var url = 'http://127.0.0.1:8000/api/matakuliah';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/matakuliah';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(({ data }) => {
@@ -164,7 +168,7 @@
         },
 
         loadallkrs() {
-            var url = `http://127.0.0.1:8000/api/krs`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/krs`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(response => {
@@ -176,7 +180,7 @@
         },
 
         remove(matakuliah) {
-            var url = `http://127.0.0.1:8000/api/matakuliah/${matakuliah.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/matakuliah/${matakuliah.id}`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.delete(url, { headers: header }).then(() => {
@@ -188,7 +192,7 @@
         },
 
         edit(matakuliah) {
-            var url = `http://127.0.0.1:8000/api/matakuliah/${matakuliah.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/matakuliah/${matakuliah.id}`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(({ data }) => {
@@ -202,7 +206,7 @@
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             if (this.matakuliah.id === '') {
-            var url = 'http://127.0.0.1:8000/api/matakuliah';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/matakuliah';
             axios.post(url, this.matakuliah, { headers: header }).then(() => {
                 console.log('Berhasil disimpan!');
                 this.loadallmatakuliah(); // reload data setelah simpan
@@ -212,7 +216,7 @@
             });
             } else {
             // Edit
-            var url = `http://127.0.0.1:8000/api/matakuliah/${this.matakuliah.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/matakuliah/${this.matakuliah.id}`;
             axios.put(url, this.matakuliah, { headers: header }).then(() => {
                 console.log('Berhasil di edit');
                 this.loadallmatakuliah(); // reload data setelah edit
@@ -222,7 +226,7 @@
         },
 
         logout() {
-            var url = 'http://127.0.0.1:8000/api/logout';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/logout';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
 
@@ -272,12 +276,6 @@
         overflow-y: auto;
     }
     
-    .sidebar a {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: #ffffff;
-    }
-    
     .sidebar a:hover {
         color: #ff0000;
         text-decoration: none;
@@ -285,5 +283,28 @@
     
     .navbar {
         z-index: 99;
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #ffffff; /* Warna putih untuk tautan lainnya */
+        font-weight: normal;
+    }
+
+    .sidebar a.logout {
+        color: #ff0000; /* Warna merah untuk tautan "Logout" */
+        font-weight: bold;
+        margin-top: 310px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a:visited {
+        text-decoration: none;
+    }
+
+    .table-container {
+        max-height: 500px; /* Adjust this value as needed */
+        overflow-y: auto;
     }
 </style>

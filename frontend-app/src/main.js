@@ -8,6 +8,7 @@ import Login from './components/Login.vue';
 import Dashboard from './components/dashboard.vue';
 import Home from './components/home.vue';
 import Detilkrs from './components/Detilkrs.vue';
+import DetilkrsNilai from './components/DetilkrsNilai.vue';
 import Mahasiswa from './components/Mahasiswa.vue';
 import MataKuliah from './components/MataKuliah.vue';
 import Agama from './components/Agama.vue';
@@ -21,6 +22,7 @@ const routes = [
   { path: '/register', component: Register },
   { path: '/home', name: 'HomePage', component: Home, meta: { requiresAuth: true } },
   { path: '/detilkrs', component: Detilkrs, meta: { requiresAuth: true } },
+  { path: '/detilkrs/detail', name: 'detilKrsNilai', component: DetilkrsNilai, meta: { requiresAuth: true } },
   { path: '/mahasiswa', component: Mahasiswa, meta: { requiresAuth: true } },
   { path: '/matakuliah', component: MataKuliah, meta: { requiresAuth: true } },
   { path: '/agama', component: Agama, meta: { requiresAuth: true } },

@@ -14,13 +14,13 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/detilkrs" class="nav-link">
-                        Data Detail KRS
+                        <router-link to="/agama" class="nav-link">
+                        Data Agama Mahasiswa
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/mahasiswa" class="nav-link">
-                        Data Mahasiswa
+                        <router-link to="/krs" class="nav-link">
+                        Data Krs
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -29,18 +29,18 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/agama" class="nav-link">
-                        Data Agama Mahasiswa
+                        <router-link to="/Mahasiswa" class="nav-link">
+                        Data Mahasiswa
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/krs" class="nav-link">
-                        Data KRS 
+                        <router-link to="/detilkrs" class="nav-link">
+                        Data Detil Krs
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" @click="logout">
-                            Logout
+                        <a href="#" class="nav-link logout" @click="logout">
+                            LOGOUT ]->
                         </a>
                     </li>
                 </ul>
@@ -60,7 +60,7 @@
             <div class="row justify-content-center">
             <div class="mb-3 form-group col-10">
                 <label>Tahun</label>
-                <input type="text" class="form-control" v-model="krs.tahun">
+                <input type="text" class="form-control" v-model="krs.tahun" placeholder="Contoh: 2022/2023">
             </div>
             <div class="mb-3 form-group col-10">
                 <label>Semester</label>
@@ -81,7 +81,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center">Id</th>
+                    <th class="text-center">NO</th>
                     <th class="text-center">Tahun</th>
                     <th class="text-center">Semester</th>
                     <th class="text-center">Action</th>
@@ -89,7 +89,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(krs, index) in allkrs" :key="krs.id">
-                    <td class="text-center">{{ krs.id }}</td>
+                    <td class="text-center">{{ index + 1 }}</td>
                     <td class="text-center">{{ krs.tahun }}</td>
                     <td class="text-center">{{ krs.semester }}</td>
                     <td class="text-center">
@@ -129,7 +129,7 @@
     
         methods: {
         loadallkrs() {
-            var url = 'http://127.0.0.1:8000/api/krs';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/krs';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(({ data }) => {
@@ -138,7 +138,7 @@
         },
     
         remove(krs) {
-            var url = `http://127.0.0.1:8000/api/krs/${krs.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/krs/${krs.id}`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.delete(url, { headers: header }).then(() => {
@@ -150,7 +150,7 @@
         },
     
         edit(krs) {
-            var url = `http://127.0.0.1:8000/api/krs/${krs.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/krs/${krs.id}`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(({ data }) => {
@@ -163,7 +163,7 @@
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             if (this.krs.id === '') {
-            var url = 'http://127.0.0.1:8000/api/krs';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/krs';
             axios.post(url, this.krs, { headers: header }).then(() => {
                 console.log('Berhasil disimpan!');
                 this.loadallkrs(); // reload data setelah simpan
@@ -173,7 +173,7 @@
             });
             } else {
             // Edit
-            var url = `http://127.0.0.1:8000/api/krs/${this.krs.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/krs/${this.krs.id}`;
             axios.put(url, this.krs, { headers: header }).then(() => {
                 console.log('Berhasil di edit');
                 this.loadallkrs(); // reload data setelah edit
@@ -183,7 +183,7 @@
         },
 
         logout() {
-            var url = 'http://127.0.0.1:8000/api/logout';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/logout';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
 
@@ -203,14 +203,14 @@
         }
     };
 </script>
-    
-<style>
-        .custom-container {
-        margin-left: 5cm; 
-        }
 
-        .custom-font {
-        font-family: 'Dashboard', sans-serif;
+<style>
+    .custom-container {
+    margin-left: 5cm; /* You can adjust this value as needed */
+    }
+
+    .custom-font {
+    font-family: 'Dashboard', sans-serif;
     }
     .sidebar {
         position: fixed;
@@ -231,12 +231,6 @@
         overflow-y: auto;
     }
     
-    .sidebar a {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: #ffffff;
-    }
-    
     .sidebar a:hover {
         color: #ff0000;
         text-decoration: none;
@@ -245,5 +239,22 @@
     .navbar {
         z-index: 99;
     }
+
+    .sidebar a {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #ffffff; /* Warna putih untuk tautan lainnya */
+        font-weight: normal;
+    }
+
+    .sidebar a.logout {
+        color: #ff0000; /* Warna merah untuk tautan "Logout" */
+        font-weight: bold;
+        margin-top: 310px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a:visited {
+        text-decoration: none;
+    }
 </style>
-    

@@ -13,13 +13,13 @@
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/detilkrs" class="nav-link">
-                    Data Detail KRS
+                    <router-link to="/agama" class="nav-link">
+                    Data Agama Mahasiswa
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/mahasiswa" class="nav-link">
-                    Data Mahasiswa
+                    <router-link to="/krs" class="nav-link">
+                    Data Krs
                     </router-link>
                 </li>
                 <li class="nav-item">
@@ -28,24 +28,23 @@
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/agama" class="nav-link">
-                    Data Agama Mahasiswa
+                    <router-link to="/mahasiswa" class="nav-link">
+                    Data Mahasiswa
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/krs" class="nav-link">
-                    Data KRS 
+                    <router-link to="/detilkrs" class="nav-link">
+                    Data Detail Krs 
                     </router-link>
                 </li>
                 <li class="nav-item">
-                        <a href="#" class="nav-link" @click="logout">
-                            Logout
+                    <a href="#" class="nav-link logout" @click="logout">
+                        LOGOUT ]->
                         </a>
-                    </li>
-                </ul>
-            </div>
-            </div>
-    
+                </li>
+            </ul>
+        </div>
+        </div>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <router-view></router-view>
             </main>
@@ -53,7 +52,7 @@
         </div>
 
         <div class="custom-container">
-        <h2 class="text-center">FORM Mata Kuliah</h2>
+        <h2 class="text-center">FORM HASIL PEMBELAJARAN</h2>
         <form @submit.prevent="simpan()">
             <div class="row justify-content-center">
             <div class="mb-3 form-group col-10">
@@ -61,28 +60,30 @@
                 <select type="text" class="form-control" v-model="detilkrs.krs_id">
                 <option value=""></option>
                 <option v-for="(krs, index) in allkrs" :key="krs.id" :value="krs.id">
-                    {{ krs.id }}
+                    {{ krs.tahun + '-' +krs.semester }}
                 </option>
                 </select>
             </div>
             <div class="mb-3 form-group col-10">
                 <label>Mahasiswa</label>
                 <select type="text" class="form-control" v-model="detilkrs.mahasiswa_id">
-                <option value=""></option>
-                <option v-for="(mahasiswa, index) in allmahasiswa" :key="mahasiswa.id" :value="mahasiswa.id">
-                    {{ mahasiswa.nama }}
-                </option>
+                    <option value=""></option>
+                    <option v-for="(mahasiswa, index) in allmahasiswa" :key="mahasiswa.id" :value="mahasiswa.id">
+                        {{ mahasiswa.nama + ' - ' + mahasiswa.nim }}
+                    </option>
                 </select>
             </div>
-            <div class="mb-3 form-group col-10">
+
+            <div class="mb-3 form-group col-10" style="max-height: 200px; overflow-y: auto;">
                 <label>Mata Kuliah</label>
                 <select type="text" class="form-control" v-model="detilkrs.matakuliah_id">
-                <option value=""></option>
-                <option v-for="(matakuliah, index) in allmatakuliah" :key="matakuliah.id" :value="matakuliah.id">
-                    {{ matakuliah.namamatakuliah }}
-                </option>
+                    <option value=""></option>
+                    <option v-for="(matakuliah, index) in allmatakuliah" :key="matakuliah.id" :value="matakuliah.id">
+                        {{ matakuliah.namamatakuliah + ' - ' + matakuliah.kode }}
+                    </option>
                 </select>
             </div>
+
             <div class="mb-3 form-group col-10">
                 <label>Nilai</label>
                 <input type="text" class="form-control" v-model="detilkrs.nilai">
@@ -96,32 +97,27 @@
             </div>
         </form>
     
-        <h3 style="text-align: center;">TABEL Detil KRS</h3>
+        <h3 style="text-align: center;">TABEL DETIL KRS</h3>
         <div class="row justify-content-center">
             <div class="col-10">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center">Id</th>
-                    <th class="text-center">Id KRS</th>
-                    <th class="text-center">Mahasiswa</th>
-                    <th class="text-center">Mata Kuliah</th>
-                    <th class="text-center">Nilai</th>
+                    <th class="text-center">NO</th>
+                    <th class="text-center">NIM</th>
+                    <th class="text-center">Nama Mahasiswa</th>
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(detilkrs, index) in alldetilkrs" :key="detilkrs.id">
-                    <td class="text-center">{{ detilkrs.id }}</td>
-                    <td class="text-center">{{ detilkrs.krs_id }}</td>
-                    <td class="text-center">{{ getMahasiswa(detilkrs.mahasiswa_id) }}</td>
-                    <td class="text-center">{{ getMatakuliah(detilkrs.matakuliah_id) }}</td>
-                    <td class="text-center">{{ detilkrs.nilai }}</td>
+                <tr v-for="(mahasiswa, index) in allmahasiswa" :key="mahasiswa.id">
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td class="text-center">{{ mahasiswa.nim }}</td>
+                    <td class="text-center">{{ mahasiswa.nama }}</td>
                     <td class="text-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-warning" @click="edit(detilkrs)">EDIT</button>
-                        <button type="button" class="btn btn-danger" @click="remove(detilkrs)">DELETE</button>
-                    </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" @click="redirectToDetilKrsNilai(mahasiswa.id)">Detail</button>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -148,6 +144,14 @@
             },
             allkrs: [],
             allmahasiswa: [],
+            mahasiswa: {
+            'id': '',
+            'nim': '',
+            'nama': '',
+            'alamat': '',
+            'lahir': '',
+            'agama_id': '',
+            },
             allmatakuliah: [],
         };
         },
@@ -162,7 +166,7 @@
     
         methods: {
         loadalldetilkrs() {
-            var url = 'http://127.0.0.1:8000/api/detilkrs';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/detilkrs';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(({ data }) => {
@@ -171,7 +175,7 @@
         },
     
         loadallkrs() {
-            var url = `http://127.0.0.1:8000/api/krs`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/krs`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(response => {
@@ -183,7 +187,7 @@
         },
     
         loadallmahasiswa() {
-            var url = `http://127.0.0.1:8000/api/mahasiswa`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/mahasiswa`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(response => {
@@ -195,7 +199,7 @@
         },
     
         loadallmatakuliah() {
-            var url = `http://127.0.0.1:8000/api/matakuliah`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/matakuliah`;
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             axios.get(url, { headers: header }).then(response => {
@@ -206,9 +210,14 @@
             });
         },
     
-        getMahasiswa(detilkrs_mahasiswa_id) {
+        getNamaMahasiswa(detilkrs_mahasiswa_id) {
             const mahasiswa = this.allmahasiswa.find(item => item.id === detilkrs_mahasiswa_id);
             return mahasiswa ? mahasiswa.nama : 'N/A';
+        },
+
+        getIdMahasiswa(detilkrs_mahasiswa_id) {
+            const mahasiswa = this.allmahasiswa.find(item => item.id === detilkrs_mahasiswa_id);
+            return mahasiswa ? mahasiswa.nim : 'N/A';
         },
     
         getMatakuliah(detilkrs_matakuliah_id) {
@@ -216,34 +225,11 @@
             return matakuliah ? matakuliah.namamatakuliah : 'N/A';
         },
     
-        remove(detilkrs) {
-            var url = `http://127.0.0.1:8000/api/detilkrs/${detilkrs.id}`;
-            var token = localStorage.getItem('token');
-            var header = {'Authorization': 'Bearer ' + token};
-            axios.delete(url, { headers: header }).then(() => {
-            console.log('Berhasil dihapus!');
-            this.loadalldetilkrs(); // perbaruin data
-            }).catch((error) => {
-            console.error('Gagal menghapus:', error);
-            });
-        },
-    
-        edit(detilkrs) {
-            var url = `http://127.0.0.1:8000/api/detilkrs/${detilkrs.id}`;
-            var token = localStorage.getItem('token');
-            var header = {'Authorization': 'Bearer ' + token};
-            axios.get(url, { headers: header }).then(({ data }) => {
-            console.log(data);
-            this.detilkrs = data;
-            console.log(this.detilkrs);
-            });
-        },
-    
         simpan() {
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
             if (this.detilkrs.id === '') {
-            var url = 'http://127.0.0.1:8000/api/detilkrs';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/detilkrs';
             axios.post(url, this.detilkrs, { headers: header }).then(() => {
                 console.log('Berhasil disimpan!');
                 this.loadalldetilkrs(); // Reload data after saving
@@ -253,7 +239,7 @@
             });
             } else {
             // Edit
-            var url = `http://127.0.0.1:8000/api/detilkrs/${this.detilkrs.id}`;
+            var url = `https://api-group13-prognet.manpits.xyz/api/detilkrs/${this.detilkrs.id}`;
             axios.put(url, this.detilkrs, { headers: header }).then(() => {
                 console.log('Berhasil di edit');
                 this.loadalldetilkrs(); // Reload data after editing
@@ -263,7 +249,7 @@
         },
 
         logout() {
-            var url = 'http://127.0.0.1:8000/api/logout';
+            var url = 'https://api-group13-prognet.manpits.xyz/api/logout';
             var token = localStorage.getItem('token');
             var header = {'Authorization': 'Bearer ' + token};
 
@@ -273,6 +259,11 @@
             }).catch((error) => {
                 console.error('Failed to logout:', error);
             });
+        },
+
+        redirectToDetilKrsNilai(mahasiswa_id) {
+            localStorage.setItem('mhs_id', mahasiswa_id);
+            this.$router.push({ name: 'detilKrsNilai' });
         },
     
         clear() {
@@ -288,11 +279,11 @@
     
     <style>
     .custom-container {
-        margin-left: 5cm; /* You can adjust this value as needed */
+    margin-left: 5cm; /* You can adjust this value as needed */
     }
 
     .custom-font {
-        font-family: 'Dashboard', sans-serif;
+    font-family: 'Dashboard', sans-serif;
     }
     .sidebar {
         position: fixed;
@@ -313,12 +304,6 @@
         overflow-y: auto;
     }
     
-    .sidebar a {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: #ffffff;
-    }
-    
     .sidebar a:hover {
         color: #ff0000;
         text-decoration: none;
@@ -327,5 +312,22 @@
     .navbar {
         z-index: 99;
     }
-    </style>
-    
+
+    .sidebar a {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #ffffff; /* Warna putih untuk tautan lainnya */
+        font-weight: normal;
+    }
+
+    .sidebar a.logout {
+        color: #ff0000; /* Warna merah untuk tautan "Logout" */
+        font-weight: bold;
+        margin-top: 310px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a:visited {
+        text-decoration: none;
+    }
+</style>

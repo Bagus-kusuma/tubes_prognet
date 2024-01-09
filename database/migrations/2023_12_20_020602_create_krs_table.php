@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('krs', function (Blueprint $table) {
             $table->id();
             $table->year('tahun');
-            $table->integer('semester');
+            $table->string('semester');
             $table->timestamps();
         });
     }
