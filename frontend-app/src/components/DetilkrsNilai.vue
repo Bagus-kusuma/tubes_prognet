@@ -83,7 +83,6 @@
                         <td class="text-center">{{ detilkrs.nilai }}</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-warning" @click="edit(detilkrs.id)">EDIT</button>
                                 <button type="button" class="btn btn-danger" @click="remove(detilkrs)">DELETE</button>
                             </div>
                         </td>
@@ -226,11 +225,6 @@ export default {
         getSemesterTahun(krs_semester) {
             const krs = this.allkrs.find(item => item.id === krs_semester);
             return krs ? krs.tahun : 'N/A';
-        },
-
-        edit(detil_id) {
-            localStorage.setItem('detil_id', detil_id);
-            this.$router.push('/detilkrs');
         },
 
         remove(detilkrs) {
