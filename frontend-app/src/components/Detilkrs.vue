@@ -165,6 +165,17 @@
         },
     
         methods: {
+        loaddetilkrs() {
+            var detil_id = localStorage.getItem('mhs_id');
+            mhs_id = mhs_id.toString();
+            var url = 'https://api-group13-prognet.manpits.xyz/api/detilkrs/';
+            var token = localStorage.getItem('token');
+            var header = {'Authorization': 'Bearer ' + token};
+            axios.get(url, { headers: header }).then(({ data }) => {
+            this.detilkrs = data;
+            });
+        },
+
         loadalldetilkrs() {
             var url = 'https://api-group13-prognet.manpits.xyz/api/detilkrs';
             var token = localStorage.getItem('token');
