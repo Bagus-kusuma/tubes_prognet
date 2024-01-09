@@ -204,6 +204,21 @@
     simpan() {
         var token = localStorage.getItem('token');
         var header = {'Authorization': 'Bearer ' + token};
+
+        const isNimUnique = !this.allmahasiswa.some(m => m.nim === this.mahasiswa.nim);
+
+        if (!isNimUnique) {
+            // Handle the case where mahasiswa.nim is not unique
+            const errorMessage = 'NIM must be unique!';
+            console.error(errorMessage);
+
+            // Display a notification
+            this.showNotification(errorMessage, 'error');
+
+            // You can also prevent form submission here if needed
+            return;
+        }
+        
         if (this.mahasiswa.id === '') {
             var url = 'https://api-group13-prognet.manpits.xyz/api/mahasiswa';
             axios.post(url, this.mahasiswa, { headers: header }).then(() => {
@@ -221,6 +236,23 @@
                 this.loadallmahasiswa(); // reload data setelah edit
                 this.clear();
             });
+        }
+    },
+
+    showNotification(message, type) {
+        // Check if the Notification API is supported
+        if ('Notification' in window) {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    new Notification(type === 'success' ? 'Success' : 'Error', {
+                        body: message,
+                        icon: type === 'success' ? 'success-icon.png' : 'error-icon.png',
+                    });
+                }
+            });
+        } else {
+            // Fallback to window.alert if Notification API is not supported
+            alert(message);
         }
     },
 
